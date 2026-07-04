@@ -1,4 +1,4 @@
 import {data} from "./data.js";
-async function getdatafromdb(){
+export async function getdatafromdb(){
     return data;
 }
