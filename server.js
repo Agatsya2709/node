@@ -32,3 +32,4 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
 });
+// query params {/api?continent=asia&country=india}
