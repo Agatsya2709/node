@@ -16,6 +16,12 @@ const server = http.createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.statusCode=200;
     res.end(JSON.stringify(filteredData), 'utf8', () => console.log('response end'))
+  }else if(req.url.startsWith('/api/country/') && req.method === 'GET'){
+    const country = req.url.split('/').pop();
+    const filteredData = destination.filter(item => item.country.toLowerCase() === country.toLowerCase());
+    res.setHeader('Content-Type', 'application/json');
+    res.statusCode=200;
+    res.end(JSON.stringify(filteredData), 'utf8', () => console.log('response end'))
   }
   else{
     res.statusCode=404;
