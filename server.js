@@ -9,16 +9,16 @@ const server = http.createServer(async (req, res) => {
   //res.write('this is some data \n')
   //res.write('this is some data \n')
    if (req.url === '/api'&& req.method === 'GET'){
-    let filterdestination = destination;
+    let filterdata = destination;
     if (queryobj.continent)//queryobj.pathname === 'continent' && queryobj.value{
-      filterdestination = filterdestination.filter(item => item.continent.toLowerCase() === queryobj.continent.toLowerCase());
+      filterdata = filterdata.filter(item => item.continent.toLowerCase() === queryobj.continent.toLowerCase());
     }
     if (queryobj.country) {
-      filterdestination = filterdestination.filter(item => item.country.toLowerCase() === queryobj.country.toLowerCase());
+      filterdata = filterdata.filter(item => item.country.toLowerCase() === queryobj.country.toLowerCase());
     }
     res.setHeader('Content-Type', 'application/json');
     res.statusCode=200;
-  res.end(JSON.stringify(filterdestination), 'utf8', () => console.log('response end'))}
+  res.end(JSON.stringify(filterdata), 'utf8', () => console.log('response end'))}
   else if(req.url.startsWith('/api/continent/')&& req.method === 'GET' ){
     const continent = req.url.split('/').pop();
     const filteredData = destination.filter(item => item.continent.toLowerCase() === continent.toLowerCase());
