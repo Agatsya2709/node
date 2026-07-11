@@ -8,37 +8,31 @@ const server = http.createServer(async (req, res) => {
   const queryobj=Object.fromEntries(urlobj.searchParams.entries())
   //res.write('this is some data \n')
   //res.write('this is some data \n')
-   if (req.url === '/api'&& req.method === 'GET'){
+   if (urlobj.pathname === '/api'&& req.method === 'GET'){
     let filterdata = destination;
-    if (queryobj.continent)//queryobj.pathname === 'continent' && queryobj.value{
-      filterdata = filterdata.filter(item => item.continent.toLowerCase() === queryobj.continent.toLowerCase());
+    if (queryobj.continent)//queryobj.pathname === 'continent' && queryobj.value
+     { filterdata = filterdata.filter(item => item.continent.toLowerCase() === queryobj.continent.toLowerCase());
     }
     if (queryobj.country) {
       filterdata = filterdata.filter(item => item.country.toLowerCase() === queryobj.country.toLowerCase());
     }
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode=200;
-  res.end(JSON.stringify(filterdata), 'utf8', () => console.log('response end'))}
-  else if(req.url.startsWith('/api/continent/')&& req.method === 'GET' ){
+    sendJSONResponse(res, 200, filterdata)}
+    else if(req.url.startsWith('/api/continent/')&& req.method === 'GET' ){
     const continent = req.url.split('/').pop();
     const filteredData = destination.filter(item => item.continent.toLowerCase() === continent.toLowerCase());
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode=200;
-    res.end(JSON.stringify(filteredData), 'utf8', () => console.log('response end'))
+    sendJSONResponse(res, 200, filteredData);
   }else if(req.url.startsWith('/api/country/') && req.method === 'GET'){
     const country = req.url.split('/').pop();
     const filteredData = destination.filter(item => item.country.toLowerCase() === country.toLowerCase());
-    res.setHeader('Content-Type', 'application/json');
+    sendJSONResponse(res, 200, filteredData);
     res.statusCode=200;
     res.end(JSON.stringify(filteredData), 'utf8', () => console.log('response end'))
   }
   else{
-    res.statusCode=404;
-    res.end(JSON.stringify({message: 'not found'}), 'utf8', () => console.log('response end'))
+    sendJSONResponse(res, 404, {message: 'not found'});
   };
 ;
 
 server.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
-});
-// query params {/api?continent=asia&country=india}
+})})// queery parameters are used to filter the data based on continent and country. The server responds with the filtered data in JSON format.

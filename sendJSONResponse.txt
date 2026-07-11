@@ -1,0 +1,11 @@
+const sendJSONResponse = (res, statusCode, data) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+   // Allow requests from any origin
+   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+   // Allow specific HTTP methods
+   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+   // Allow specific headers
+  res.statusCode = statusCode;
+  res.end(JSON.stringify(data), 'utf8', () => console.log('response end'));
+};
